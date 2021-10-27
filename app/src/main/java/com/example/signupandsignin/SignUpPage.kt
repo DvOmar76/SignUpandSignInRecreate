@@ -16,11 +16,12 @@ class SignUpPage : AppCompatActivity() {
         setContentView(binding.root)
         val dbHelper=DBHelper(applicationContext)
         binding.btnSubmit.setOnClickListener {
-            var name=binding.edName.text.toString()
-            var mobile=binding.edMobile.text.toString().toInt()
-            var location=binding.edLocation.text.toString()
-            var password=binding.edPassword.text.toString()
+            
             try {
+                 var name=binding.edName.text.toString()
+                 var mobile=binding.edMobile.text.toString().toInt()
+                 var location=binding.edLocation.text.toString()
+                 var password=binding.edPassword.text.toString()
                 if (name.isNotEmpty()&&location.isNotEmpty()&&password.isNotEmpty())
                 {
                     val status=dbHelper.addUser(name,mobile,location,password)
