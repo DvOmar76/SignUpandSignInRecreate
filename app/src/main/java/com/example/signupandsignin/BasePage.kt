@@ -19,6 +19,7 @@ class BasePage : AppCompatActivity() {
         binding.tvDetails.text="${name}\n${location}\n"
         binding.btnSignOut.setOnClickListener {
             startActivity(Intent(applicationContext,MainActivity::class.java))
+            finish()
         }
     }
 }

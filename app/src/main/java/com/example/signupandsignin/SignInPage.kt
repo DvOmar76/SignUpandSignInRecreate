@@ -3,8 +3,10 @@ package com.example.signupandsignin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.signupandsignin.Model.DBHelper
 import com.example.signupandsignin.databinding.ActivitySignInPageBinding
+import java.lang.Exception
 
 class SignInPage : AppCompatActivity() {
     lateinit var binding: ActivitySignInPageBinding
@@ -15,15 +17,33 @@ class SignInPage : AppCompatActivity() {
 
         val dbHelper=DBHelper(applicationContext)
         binding.btnSignIn.setOnClickListener {
-           val name= binding.edName.text.toString()
-           val password= binding.edPasswordSignIn.text.toString()
-            val status =dbHelper.getUsers(name,password)
-            if (status!=null){
-                val intent=Intent(applicationContext,BasePage::class.java)
-                intent.putExtra("name",name)
-                intent.putExtra("mobile",name)
-                intent.putExtra("location",name)
-                startActivity(intent)
+
+            try {
+                val mobile= binding.edMobile.text.toString().toInt()
+                val password= binding.edPasswordSignIn.text.toString()
+                if (password.isNotEmpty())
+                {
+                    val status = dbHelper.getUsers(mobile, password)
+                    if (status != null)
+                    {
+                        val intent = Intent(applicationContext, BasePage::class.java)
+                        intent.putExtra("name", status.name)
+                        intent.putExtra("mobile",status.mobile )
+                        intent.putExtra("location", status.location)
+                        startActivity(intent)
+                    }
+                    else
+                    {
+                        Toast.makeText(applicationContext, "info is not matching", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+
+            }
+            catch (e:Exception)
+            {
+                Toast.makeText(applicationContext, "pleas enter number in mobile", Toast.LENGTH_SHORT).show()
+
             }
 
         }

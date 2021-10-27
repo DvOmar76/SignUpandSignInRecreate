@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.signupandsignin.Model.DBHelper
 import com.example.signupandsignin.databinding.ActivitySignUpPageBinding
+import java.lang.Exception
 
 class SignUpPage : AppCompatActivity() {
     lateinit var binding: ActivitySignUpPageBinding
@@ -16,21 +17,33 @@ class SignUpPage : AppCompatActivity() {
         val dbHelper=DBHelper(applicationContext)
         binding.btnSubmit.setOnClickListener {
             var name=binding.edName.text.toString()
-            var mobile=binding.edMobile.text.toString()
+            var mobile=binding.edMobile.text.toString().toInt()
             var location=binding.edLocation.text.toString()
             var password=binding.edPassword.text.toString()
-            if (name.isNotEmpty()&&mobile.isNotEmpty()&&location.isNotEmpty()&&password.isNotEmpty())
-            {
-                val status=dbHelper.addUser(name,mobile,location,password)
-                if(status!=-1L){
-                    Toast.makeText(applicationContext, "user is added ", Toast.LENGTH_SHORT).show()
-                    val intent=Intent(applicationContext,BasePage::class.java)
-                    intent.putExtra("name",name)
-                    intent.putExtra("mobile",name)
-                    intent.putExtra("location",name)
-                    startActivity(intent)
+            try {
+                if (name.isNotEmpty()&&location.isNotEmpty()&&password.isNotEmpty())
+                {
+                    val status=dbHelper.addUser(name,mobile,location,password)
+                    if(status!=-1L)
+                    {
+                        Toast.makeText(applicationContext, "user is added ", Toast.LENGTH_SHORT).show()
+                        val intent=Intent(applicationContext,BasePage::class.java)
+                        intent.putExtra("name",name)
+                        intent.putExtra("mobile",mobile)
+                        intent.putExtra("location",location)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
+                else
+                {
+                    Toast.makeText(applicationContext, "pleas complete the fields", Toast.LENGTH_SHORT).show()
+
+                }
+            }catch (e:Exception){
+                Toast.makeText(applicationContext, "pleas enter number in mobile", Toast.LENGTH_SHORT).show()
             }
+           
         }
     }
 }
