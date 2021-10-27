@@ -28,7 +28,7 @@ class SignInPage : AppCompatActivity() {
                     {
                         val intent = Intent(applicationContext, BasePage::class.java)
                         intent.putExtra("name", status.name)
-                        intent.putExtra("mobile",status.mobile )
+                        intent.putExtra("mobile",mobile.toString() )
                         intent.putExtra("location", status.location)
                         startActivity(intent)
                     }
@@ -36,6 +36,11 @@ class SignInPage : AppCompatActivity() {
                     {
                         Toast.makeText(applicationContext, "info is not matching", Toast.LENGTH_SHORT).show()
                     }
+
+                }
+                else
+                {
+                    Toast.makeText(applicationContext, "complete password filed", Toast.LENGTH_SHORT).show()
 
                 }
 
