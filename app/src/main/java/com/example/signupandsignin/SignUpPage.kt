@@ -16,12 +16,12 @@ class SignUpPage : AppCompatActivity() {
         setContentView(binding.root)
         val dbHelper=DBHelper(applicationContext)
         binding.btnSubmit.setOnClickListener {
-            
+
             try {
-                 var name=binding.edName.text.toString()
-                 var mobile=binding.edMobile.text.toString().toInt()
-                 var location=binding.edLocation.text.toString()
-                 var password=binding.edPassword.text.toString()
+                var name=binding.edName.text.toString()
+                var mobile=binding.edMobile.text.toString().toInt()
+                var location=binding.edLocation.text.toString()
+                var password=binding.edPassword.text.toString()
                 if (name.isNotEmpty()&&location.isNotEmpty()&&password.isNotEmpty())
                 {
                     val status=dbHelper.addUser(name,mobile,location,password)
@@ -30,10 +30,15 @@ class SignUpPage : AppCompatActivity() {
                         Toast.makeText(applicationContext, "user is added ", Toast.LENGTH_SHORT).show()
                         val intent=Intent(applicationContext,BasePage::class.java)
                         intent.putExtra("name",name)
-                        intent.putExtra("mobile",mobile)
+                        intent.putExtra("mobile",mobile.toString())
                         intent.putExtra("location",location)
                         startActivity(intent)
                         finish()
+                    }
+                    else
+                    {
+                        Toast.makeText(applicationContext, "this mobile is already registered", Toast.LENGTH_SHORT).show()
+
                     }
                 }
                 else
